@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MX Extensions Standard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mozilla+Headline:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #ffffff;
+      --ink: #2c2c2c;
+      --muted: #666666;
+      --rule: #e6e6e6;
+      --accent: #4b79aa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--ink);
+      font-family: "Mozilla Headline", sans-serif;
+      line-height: 1.42;
+    }
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 48px 36px 64px;
+    }
+    .page-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 74ch) minmax(240px, 300px);
+      gap: 56px;
+      align-items: start;
+    }
+    .doc {
+      min-width: 0;
+      font-size: 16px;
+    }
+    .doc-header {
+      margin-bottom: 1.8rem;
+    }
+    .doc-meta {
+      margin: 0 0 1.9rem;
+      font-size: 0.92rem;
+      font-family: "Mozilla Headline", sans-serif;
+    }
+    .doc-meta-row {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 12px;
+    }
+    .doc-meta-row + .doc-meta-row {
+      margin-top: 0.18rem;
+    }
+    .doc-meta dt,
+    .doc-meta dd {
+      margin: 0;
+    }
+    .doc-meta dt {
+      text-align: right;
+      color: var(--muted);
+    }
+    h1, h2, h3, h4 {
+      margin: 0 0 0.75rem;
+      line-height: 1.3;
+      color: var(--ink);
+      font-weight: 700;
+      font-family: "Mozilla Headline", sans-serif;
+    }
+    .doc-title {
+      font-size: 1.15rem;
+      margin-bottom: 0.3rem;
+    }
+    .doc-subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    h2 {
+      margin-top: 1.7rem;
+      font-size: 1rem;
+    }
+    h3 {
+      margin-top: 1.35rem;
+      font-size: 1rem;
+    }
+    h4 {
+      margin-top: 1.1rem;
+      font-size: 1rem;
+    }
+    p, ul, address {
+      margin: 0 0 1em;
+      font-size: 1rem;
+    }
+    ul {
+      padding-left: 1.25rem;
+    }
+    li + li {
+      margin-top: 0.25em;
+    }
+    .toc-panel {
+      position: sticky;
+      top: 32px;
+      font-size: 0.92rem;
+    }
+    .toc-title {
+      margin: 0 0 1rem;
+      font-size: 1rem;
+      font-family: "Mozilla Headline", sans-serif;
+    }
+    .toc-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-family: "Mozilla Headline", sans-serif;
+    }
+    .toc-item {
+      margin: 0;
+      padding: 0;
+    }
+    .toc-item + .toc-item {
+      margin-top: 0.35rem;
+    }
+    .toc-level-2 {
+      padding-left: 1rem;
+    }
+    .toc-level-3 {
+      padding-left: 2rem;
+    }
+    .toc-level-4 {
+      padding-left: 3rem;
+    }
+    .stamp {
+      margin-top: 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    section:first-of-type h2 {
+      margin-top: 0;
+    }
+    .boilerplate {
+      margin-bottom: 1.8rem;
+    }
+    address {
+      font-style: normal;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+    .abstract,
+    .middle,
+    .back {
+      margin-top: 1.35rem;
+    }
+    .ref-list {
+      margin: 0 0 1.2rem;
+    }
+    .ref-entry {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+    .ref-entry + .ref-entry {
+      margin-top: 0.75rem;
+    }
+    .ref-label {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .ref-text {
+      min-width: 0;
+    }
+    .author-address + .author-address {
+      margin-top: 1rem;
+    }
+    @media (max-width: 700px) {
+      main {
+        padding: 28px 16px 40px;
+      }
+      .page-layout {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .toc-panel {
+        position: static;
+        order: -1;
+      }
+      .doc-meta-row {
+        grid-template-columns: 108px minmax(0, 1fr);
+      }
+      .doc-meta dt {
+        text-align: left;
+      }
+      .ref-entry {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="page-layout">
+      <article class="doc">
+        <header class="doc-header">
+  <dl class="doc-meta">
+    <div class="doc-meta-row"><dt>Stream Draft:</dt><dd>draft-cranstoun-mx-extensions</dd></div>
+    <div class="doc-meta-row"><dt>Published:</dt><dd>2026-04-16</dd></div>
+  </dl>
+  <h1 class="doc-title">MX Extensions Standard</h1>
+  <p class="doc-subtitle">MXS-02</p>
+</header>
+        <section class="boilerplate">
+  <h2>Status of This Memo</h2>
+  <p>This page is a rendered build of the current The Gathering draft source. Final publication status and normative effect are determined by The Gathering process.</p>
+  <h2>Copyright Notice</h2>
+  <p>Copyright (c) 2026 The Gathering and the persons identified as the document authors. All rights reserved.</p>
+  <p>This rendered output is subject to The Gathering legal and policy terms in effect on the date of publication: <a href="https://gathering.foundation/privacy-and-policies" target="_blank" rel="noreferrer">https://gathering.foundation/privacy-and-policies</a></p>
+</section>
+        <section class="abstract">
+<h2>Abstract</h2>
+<p>This document defines the namespace policy, carrier format mappings, and extension mechanisms for the Machine Experience (MX) framework. It specifies how MX metadata is carried across different file types, how field names adapt to different syntactic contexts, and how vendors extend the MX vocabulary without polluting the standard namespace.</p>
+<p>The namespace policy establishes three levels: standard fields (no prefix, owned by The Gathering), public extensions (`x-mx-`, owned by CogNovaMX), and private extensions (`x-mx-p-`, owned by CogNovaMX, values obfuscated). The carrier format mappings define how MX metadata is expressed in markdown, HTML, JavaScript, CSS, images, shell scripts, sidecar files, and database contexts.</p>
+<p>This standard adopts the conformance level framework defined in the [MX Core Metadata Standard](mxs-01-core-metadata.cog.md).</p>
+</section>
+<section class="middle">
+<h2 id="1-conformance">1. Conformance</h2>
+<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be interpreted as described in [RFC 2119](<a href="https://www.rfc-editor.org/rfc/rfc2119)." target="_blank" rel="noreferrer">https://www.rfc-editor.org/rfc/rfc2119).</a></p>
+<h3 id="11-conformance-levels">1.1. Conformance levels</h3>
+<p>This standard adopts the three conformance levels defined in the [MX Core Metadata Standard](mxs-01-core-metadata.cog.md), Section 2.1:</p>
+<p>| Level | Name | Requirement for this document | |-------|------|-------------------------------| | Level 1 | **MX Core** | Valid namespace usage — standard fields have no prefix, extensions use `x-mx-` or `x-mx-p-`. No prefix pollution. | | Level 2 | **MX Standard** | Carrier format metadata present for all applicable file types. | | Level 3 | **MX Complete** | Full `mx:*` coverage across all carrier contexts. All applicable extension fields present. |</p>
+<p>A document claiming conformance at a given level MUST satisfy all requirements at that level and all lower levels.</p>
+<h3 id="12-authoritative-status">1.2. Authoritative status</h3>
+<p>This standard is an authoritative specification published by The Gathering. The field definitions, conformance requirements, and normative rules in this document are self-standing.</p>
+<p>---</p>
+<h2 id="2-scope-and-relationship-to-other-standards">2. Scope and relationship to other standards</h2>
+<h3 id="21-what-this-document-covers">2.1. What this document covers</h3>
+<p>This document specifies:</p>
+<ul>
+  <li>**Namespace policy** — the three-level prefix hierarchy and governance rules</li>
+  <li>**Context-specific naming** — how the same field appears in YAML, HTML, JSDoc, CSS, shell, XMP, sidecar, and SQL contexts</li>
+  <li>**Carrier format mappings** — how MX metadata is carried in each supported file type</li>
+  <li>**Non-YAML identity fields** — the `mx:*` equivalents of standard cog fields for non-YAML carrier formats</li>
+  <li>**Public extension fields** — the `x-mx-` vendor extension vocabulary</li>
+  <li>**Private extension mechanism** — the `x-mx-p-` obfuscated extension system</li>
+  <li>**Extension registration process** — how to add new extension fields</li>
+</ul>
+<h3 id="22-what-this-document-does-not-cover">2.2. What this document does not cover</h3>
+<p>The following are defined in companion standards:</p>
+<p>| Topic | Standard | |-------|----------| | Zone 1/Zone 2 core fields, conformance level framework | [MX Core Metadata Standard](mxs-01-core-metadata.cog.md) | | Trust, attribution, verification, decision records | [MX Provenance Standard](mxs-03-provenance.cog.md) | | AI governance, agent policies, training controls | [MX AI/Agent Policy Standard](deferred/mxs-04-ai-agent-policy.cog.md) | | Content-type-specific fields (code, media, database, etc.) | [MX Profile-Specific Metadata Standard](deferred/mxs-05-profile-metadata.cog.md) |</p>
+<h3 id="23-relationship-to-existing-standards">2.3. Relationship to existing standards</h3>
+<p>This standard builds upon:</p>
+<ul>
+  <li>**[MX Core Metadata Standard](mxs-01-core-metadata.cog.md)** — defines the conformance level framework this document adopts</li>
+  <li>**[Cog Unified Specification](../specifications/cog-unified-spec.cog.md)** — defines the cog file format and carrier format details</li>
+  <li>**[ADR-02: Namespace Policy](../architecture-decisions/adr-02-namespace-policy.cog.md)** — architecture decision establishing the three-level namespace</li>
+  <li>**[NDR-02: camelCase Naming](../naming-decisions/ndr-02-camelcase-naming.cog.md)** — field naming convention for YAML contexts</li>
+  <li>**[NDR-03: Spelling Neutrality](../naming-decisions/ndr-03-spelling-neutrality.cog.md)** — field names avoid regional spelling variants</li>
+  <li>**HTTP Extension Header Convention** — the `x-` prefix convention for non-standard headers, adapted for metadata namespaces</li>
+</ul>
+<p>---</p>
+<h2 id="3-terminology">3. Terminology</h2>
+<ul>
+  <li>**Cog** — A `.cog.md` file. The atomic unit of the MX document system. Defined by the [Cog Unified Specification](../specifications/cog-unified-spec.cog.md).</li>
+  <li>**Carrier format** — The mechanism by which a non-markdown file carries MX metadata (HTML meta tags, JSDoc comments, CSS comments, etc.).</li>
+  <li>**Namespace** — A prefix that identifies the owner and governance policy of a metadata field.</li>
+  <li>**Standard field** — A field with no prefix, owned by The Gathering, universal across all MX implementations.</li>
+  <li>**Extension field** — A field with an `x-mx-` or `x-mx-p-` prefix, owned by a vendor (currently CogNovaMX).</li>
+  <li>**Sidecar file** — A standalone metadata file (`.mx.yaml` or `.mx.yaml.md`) placed alongside a media asset or at a directory root.</li>
+  <li>**$MX_HOME** — The local MX OS registry directory. Contains decode tables for private extension values.</li>
+  <li>**SSOT** — Single Source of Truth. The authoritative source for a given piece of information.</li>
+</ul>
+<p>---</p>
+<h2 id="4-design-principles">4. Design principles</h2>
+<p>The namespace and carrier format system follows these principles:</p>
+<p>1. **The prefix IS the policy.** No documentation lookup is needed to determine governance — `x-` means extension, `mx-` means CogNovaMX, `p-` means private. 2. **Standard fields are universal.** Every MX implementation uses the same core vocabulary with no prefix. 3. **Extensions are opt-in.** No implementation is required to support `x-mx-` or `x-mx-p-` fields. 4. **Carrier formats are lossless.** The same metadata can be expressed in any supported format without information loss. 5. **Context determines syntax, not semantics.** A field means the same thing regardless of whether it appears in YAML, HTML, or JSDoc.</p>
+<p>---</p>
+<h2 id="5-namespace-policy">5. Namespace policy</h2>
+<h3 id="51-the-three-level-namespace">5.1. The three-level namespace</h3>
+<p>MX metadata fields are organised into three namespace levels. Each level has a distinct prefix, owner, and governance policy.</p>
+<p>| Level | Prefix | Owner | Governance | Visibility | |-------|--------|-------|------------|------------| | Standard | *(none)* | The Gathering | Community-governed. Changes require Gathering approval. | Universal — all implementations use these fields. | | Public extension | `x-mx-` | CogNovaMX | Vendor-governed. CogNovaMX decides. | Visible in published cogs. Implementation extension, not the open standard. | | Private extension | `x-mx-p-` | CogNovaMX | Vendor-governed. CogNovaMX decides. | Obfuscated. Only `$MX_HOME` registry holders can decode values. |</p>
+<h3 id="52-standard-fields-no-prefix">5.2. Standard fields (no prefix)</h3>
+<p>Standard fields are the core MX vocabulary defined in the [MX Core Metadata Standard](mxs-01-core-metadata.cog.md) and this document. They have no prefix and are owned by The Gathering.</p>
+<p>**Rule:** Implementations MUST NOT add a prefix to standard fields. A field defined in the core standard MUST always appear without a prefix in all contexts.</p>
+<p>**Example (correct):**</p>
+<p>```yaml mx: status: active contentType: guide ```</p>
+<p>**Example (incorrect — prefix pollution):**</p>
+<p>```yaml mx: x-mx-status: active     # WRONG — status is a standard field mx-contentType: guide    # WRONG — contentType is a standard field ```</p>
+<h3 id="53-public-extension-fields-x-mx-">5.3. Public extension fields (`x-mx-`)</h3>
+<p>Public extension fields use the `x-mx-` prefix. They are owned by CogNovaMX and follow the HTTP extension header convention (`x-` = extension, `mx-` = CogNovaMX's namespace).</p>
+<p>**Rule:** Public extension fields MUST use the `x-mx-` prefix. They MUST use kebab-case for the field name portion (unlike standard fields which use camelCase in YAML).</p>
+<p>**Rule:** Public extension fields are visible in published cogs and public outputs. They are implementation-specific features, not part of the open standard.</p>
+<p>**Example:**</p>
+<p>```yaml mx: x-mx-mount-type: personal x-mx-mount-swappable: true ```</p>
+<h3 id="54-private-extension-fields-x-mx-p-">5.4. Private extension fields (`x-mx-p-`)</h3>
+<p>Private extension fields use the `x-mx-p-` prefix. They are owned by CogNovaMX and their values are hashed, encoded, or tokenised.</p>
+<p>**Rule:** Private extension field values MUST be opaque to any system that does not hold the decode registry at `$MX_HOME`.</p>
+<p>**Rule:** Implementations MUST NOT attempt to interpret `x-mx-p-` field values without access to the decode registry. Unknown values MUST be passed through unchanged.</p>
+<p>**Example:**</p>
+<p>```yaml mx: x-mx-p-client-tier: &quot;a3f2c8&quot; ```</p>
+<h3 id="55-prefix-parsing-rule">5.5. Prefix parsing rule</h3>
+<p>Implementations MUST parse field prefixes using the following precedence:</p>
+<p>1. If the field name starts with `x-mx-p-`, it is a **private extension**. 2. If the field name starts with `x-mx-`, it is a **public extension**. 3. Otherwise, it is a **standard field**.</p>
+<p>This ordering ensures that `x-mx-p-` is not misidentified as `x-mx-` followed by `p-`.</p>
+<p>---</p>
+<h2 id="6-context-specific-naming">6. Context-specific naming</h2>
+<h3 id="61-the-naming-problem">6.1. The naming problem</h3>
+<p>The same MX field must appear in syntactically different contexts — YAML frontmatter, HTML meta tags, JavaScript documentation comments, CSS comments, shell scripts, XMP metadata, sidecar files, and SQL comments. Each context has its own naming conventions.</p>
+<h3 id="62-naming-rules-by-context">6.2. Naming rules by context</h3>
+<p>| Context | Convention | Example field | Example syntax | |---------|-----------|---------------|----------------| | YAML | camelCase | `buildsOn` | `buildsOn: [cog-unified-spec]` | | HTML | kebab-case with `mx:` prefix | `mx:content-type` | `&lt;meta name=&quot;mx:content-type&quot; content=&quot;guide&quot;&gt;` | | JSDoc | kebab-case with `@mx:` tag | `@mx:runtime` | `@mx:runtime node` | | CSS | kebab-case with `@mx:` comment | `@mx:type` | `/* @mx:type utility */` | | Shell | camelCase in `# key: value` lines | `contentType` | `# contentType: guide` | | XMP | `mx:` namespace prefix | `mx:status` | `&lt;mx:status&gt;active&lt;/mx:status&gt;` | | Sidecar | camelCase in YAML | `contentType` | `contentType: guide` | | SQL | camelCase in `-- @mx` comment blocks | `contentType` | `-- @mx contentType: guide` |</p>
+<h3 id="63-conversion-rules">6.3. Conversion rules</h3>
+<p>When converting field names between contexts, implementations MUST apply the following rules:</p>
+<p>1. **YAML to HTML:** Convert camelCase to kebab-case, add `mx:` prefix. Example: `contentType` becomes `mx:content-type`. 2. **YAML to JSDoc/CSS:** Convert camelCase to kebab-case, add `@mx:` prefix. Example: `buildsOn` becomes `@mx:builds-on`. 3. **YAML to Shell/Sidecar:** No conversion. Use camelCase as-is. 4. **YAML to SQL:** No conversion. Use camelCase in `-- @mx` comment blocks. 5. **YAML to XMP:** Add `mx:` namespace prefix. Case preserved. Example: `status` becomes `mx:status`.</p>
+<h3 id="64-extension-field-naming-in-non-yaml-contexts">6.4. Extension field naming in non-YAML contexts</h3>
+<p>Extension fields (`x-mx-` and `x-mx-p-`) already use kebab-case. In non-YAML contexts, the prefix is preserved as-is:</p>
+<p>| Context | Standard field example | Extension field example | |---------|----------------------|------------------------| | YAML | `contentType: guide` | `x-mx-mount-type: personal` | | HTML | `&lt;meta name=&quot;mx:content-type&quot;&gt;` | `&lt;meta name=&quot;mx:x-mx-mount-type&quot;&gt;` | | JSDoc | `@mx:content-type guide` | `@mx:x-mx-mount-type personal` |</p>
+<p>---</p>
+<h2 id="7-carrier-format-mappings">7. Carrier format mappings</h2>
+<h3 id="71-cogmd-yaml-frontmatter">7.1. `.cog.md` — YAML frontmatter</h3>
+<p>| Property | Value | |----------|-------| | **File types** | `.cog.md`, `.md`, `.mx.yaml.md` | | **Carrier mechanism** | YAML frontmatter between `---` delimiters | | **Field naming** | camelCase (Zone 2 fields under `mx:` object) | | **Conformance** | MUST (Level 1) for all markdown-based MX documents |</p>
+<p>**Definition:** The primary carrier format. All MX-aware markdown documents carry metadata in YAML frontmatter using the two-zone model defined in the [MX Core Metadata Standard](mxs-01-core-metadata.cog.md), Section 5.</p>
+<p>**Example:**</p>
+<p>```yaml --- title: &quot;Document Title&quot; description: &quot;Brief summary&quot; author: &quot;Author Name&quot; created: 2026-04-02 modified: 2026-04-16 version: &quot;1.0&quot;</p>
+<p>mx: status: active contentType: guide tags: [metadata, example] --- ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>Zone 1 fields MUST appear at the top level.</li>
+  <li>Zone 2 fields MUST appear inside the `mx:` object.</li>
+  <li>Extension fields appear inside the `mx:` object alongside standard Zone 2 fields.</li>
+</ul>
+<p>---</p>
+<h3 id="72-coghtml-html-meta-tags">7.2. `.cog.html` — HTML meta tags</h3>
+<p>| Property | Value | |----------|-------| | **File types** | `.cog.html`, `.html` | | **Carrier mechanism** | `&lt;meta name=&quot;mx:*&quot;&gt;` tags in `&lt;head&gt;`, `data-mx-*` attributes on elements | | **Field naming** | kebab-case with `mx:` prefix | | **Conformance** | MUST (Level 2) for HTML documents claiming MX conformance | | **Required fields** | `description` (standard HTML meta) + `author` (standard HTML meta) + at least one `&lt;meta name=&quot;mx:*&quot;&gt;` tag |</p>
+<p>**Definition:** HTML documents carry MX metadata using `&lt;meta&gt;` tags in the document `&lt;head&gt;`. The `mx:` prefix in the `name` attribute distinguishes MX metadata from standard HTML meta tags.</p>
+<p>**Example:**</p>
+<p>```html &lt;head&gt; &lt;meta name=&quot;description&quot; content=&quot;Brief summary for search and AI agents&quot;&gt; &lt;meta name=&quot;author&quot; content=&quot;Tom Cranstoun&quot;&gt; &lt;meta name=&quot;mx:status&quot; content=&quot;active&quot;&gt; &lt;meta name=&quot;mx:content-type&quot; content=&quot;guide&quot;&gt; &lt;meta name=&quot;mx:tags&quot; content=&quot;metadata, example&quot;&gt; &lt;/head&gt; ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>Standard HTML meta tags (`description`, `author`) MUST use their native HTML names without the `mx:` prefix.</li>
+  <li>MX-specific fields MUST use the `mx:` prefix in the `name` attribute.</li>
+  <li>Array values MUST be serialised as comma-separated strings.</li>
+  <li>`data-mx-*` attributes MAY be used on body elements for element-level MX metadata.</li>
+</ul>
+<p>---</p>
+<h3 id="73-cogjs-jsdoc-comments">7.3. `.cog.js` — JSDoc comments</h3>
+<p>| Property | Value | |----------|-------| | **File types** | `.cog.js`, `.js` | | **Carrier mechanism** | JSDoc `/** */` block with `@mx:` tags | | **Field naming** | kebab-case with `@mx:` tag prefix | | **Conformance** | MUST (Level 2) for JavaScript documents claiming MX conformance | | **Required fields** | `@description` + `@version`/`@author` + at least one `@mx:*` tag |</p>
+<p>**Definition:** JavaScript files carry MX metadata in a JSDoc comment block at the top of the file. MX-specific fields use the `@mx:` tag prefix.</p>
+<p>**Example:**</p>
+<p>```javascript /** * @description MX validation utility * @version 1.0 * @author Tom Cranstoun * @mx:status active * @mx:content-type utility * @mx:runtime node * @mx:tags validation, metadata */ ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>Standard JSDoc tags (`@description`, `@version`, `@author`) MUST use their native JSDoc names.</li>
+  <li>MX-specific fields MUST use the `@mx:` prefix.</li>
+  <li>The JSDoc block SHOULD appear at the top of the file, before any code.</li>
+</ul>
+<p>---</p>
+<h3 id="74-cogcss-css-comments">7.4. `.cog.css` — CSS comments</h3>
+<p>| Property | Value | |----------|-------| | **File types** | `.cog.css`, `.css` | | **Carrier mechanism** | CSS comment `/* */` block with `@mx:` tags | | **Field naming** | kebab-case with `@mx:` tag prefix | | **Conformance** | MUST (Level 2) for CSS documents claiming MX conformance | | **Required fields** | `@description` + `@version`/`@author` + at least one `@mx:*` tag |</p>
+<p>**Definition:** CSS files carry MX metadata in a comment block at the top of the file. MX-specific fields use the `@mx:` tag prefix.</p>
+<p>**Example:**</p>
+<p>```css /* * @description Global layout styles * @version 2.0 * @author Tom Cranstoun * @mx:status active * @mx:type utility * @mx:tags layout, responsive */ ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>The metadata comment block SHOULD appear at the top of the file, before any rules.</li>
+  <li>MX-specific fields MUST use the `@mx:` prefix.</li>
+</ul>
+<p>---</p>
+<h3 id="75-cogpng-cogjpg-exifxmp-metadata">7.5. `.cog.png` / `.cog.jpg` — EXIF/XMP metadata</h3>
+<p>| Property | Value | |----------|-------| | **File types** | `.cog.png`, `.cog.jpg`, `.png`, `.jpg`, `.webp`, `.svg` | | **Carrier mechanism** | EXIF/XMP metadata with `mx:` namespace | | **Field naming** | `mx:` namespace prefix, original case preserved | | **Conformance** | MAY (Level 3) |</p>
+<p>**Definition:** Image files carry MX metadata in EXIF/XMP metadata blocks using the `mx:` XML namespace. When XMP embedding is not practical, a sidecar file (`.mx.yaml`) SHOULD be used instead.</p>
+<p>**Example (XMP):**</p>
+<p>```xml &lt;rdf:Description xmlns:mx=&quot;<a href="https://allabout.network/ns/mx/1.0&quot;&gt;" target="_blank" rel="noreferrer">https://allabout.network/ns/mx/1.0&quot;&gt;</a> &lt;mx:status&gt;active&lt;/mx:status&gt; &lt;mx:contentType&gt;illustration&lt;/mx:contentType&gt; &lt;/rdf:Description&gt; ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>XMP embedding is OPTIONAL. A sidecar file is an acceptable alternative.</li>
+  <li>The MX XMP namespace URI is `<a href="https://allabout.network/ns/mx/1.0`." target="_blank" rel="noreferrer">https://allabout.network/ns/mx/1.0`.</a></li>
+</ul>
+<p>---</p>
+<h3 id="76-shell-scripts-comment-block">7.6. Shell scripts — comment block</h3>
+<p>| Property | Value | |----------|-------| | **File types** | `.sh`, `.bash`, `.zsh` | | **Carrier mechanism** | `# ---` YAML block with `#` prefix on each line | | **Field naming** | camelCase in `# key: value` lines | | **Conformance** | MUST (Level 2) for shell scripts claiming MX conformance | | **Required fields** | `title`, `description`, `status`, `author` |</p>
+<p>**Definition:** Shell scripts carry MX metadata in a comment block using `# ---` delimiters, with each YAML line prefixed by `#`.</p>
+<p>**Example:**</p>
+<p>```bash #!/bin/bash</p>
+<h2 id="8----">8. ---</h2>
+<h2 id="9-title-build-and-deploy">9. title: &quot;Build and deploy&quot;</h2>
+<h2 id="10-description-builds-site-artefacts-and-deploys-to-cloudflare">10. description: &quot;Builds site artefacts and deploys to Cloudflare&quot;</h2>
+<h2 id="11-author-tom-cranstoun">11. author: &quot;Tom Cranstoun&quot;</h2>
+<h2 id="12-status-active">12. status: active</h2>
+<h2 id="13-contenttype-script">13. contentType: script</h2>
+<h2 id="14----">14. ---</h2>
+<p>```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>The metadata block MUST start and end with `# ---`.</li>
+  <li>Field names use camelCase, matching YAML conventions.</li>
+  <li>The metadata block SHOULD appear immediately after the shebang line.</li>
+</ul>
+<p>---</p>
+<h3 id="141-mxyaml-media-sidecar">14.1. `.mx.yaml` — media sidecar</h3>
+<p>| Property | Value | |----------|-------| | **File types** | `.mx.yaml` (placed alongside a media asset) | | **Carrier mechanism** | Standalone YAML file | | **Field naming** | camelCase | | **Conformance** | MAY (Level 3) |</p>
+<p>**Definition:** A sidecar metadata file placed alongside a media asset (image, video, audio, binary) that cannot carry embedded metadata. The sidecar file name matches the asset file name with `.mx.yaml` appended.</p>
+<p>**Example (for `hero-image.webp`):**</p>
+<p>File: `hero-image.webp.mx.yaml`</p>
+<p>```yaml title: &quot;Hero banner image&quot; description: &quot;Full-width hero image for the landing page&quot; author: &quot;Tom Cranstoun&quot; created: 2026-04-02 modified: 2026-04-16</p>
+<p>mx: status: active contentType: image tags: [hero, banner, landing] ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>The sidecar file MUST use the two-zone model (Zone 1 at top level, Zone 2 under `mx:`).</li>
+  <li>The sidecar file name MUST match the asset file name with `.mx.yaml` appended.</li>
+</ul>
+<p>---</p>
+<h3 id="142-mxyaml-code-repository-root">14.2. `mx.yaml` — code repository root</h3>
+<p>| Property | Value | |----------|-------| | **File types** | `mx.yaml` (at repository root) | | **Carrier mechanism** | Standalone YAML file | | **Field naming** | camelCase | | **Conformance** | MAY (Level 3) |</p>
+<p>**Definition:** A repository-level metadata file placed at the root of a code repository. Provides MX metadata for the repository as a whole.</p>
+<p>**Example:**</p>
+<p>```yaml title: &quot;MX Hub&quot; description: &quot;Central hub for Machine Experience development&quot; author: &quot;Tom Cranstoun&quot; created: 2026-01-15 modified: 2026-04-16</p>
+<p>mx: status: active contentType: repository domain: machine-experience tags: [hub, mx, repository] ```</p>
+<p>---</p>
+<h3 id="143-database-sidecars-and-inline-sql">14.3. Database sidecars and inline SQL</h3>
+<p>| Property | Value | |----------|-------| | **File types** | `mx.database.yaml` (sidecar), `.sql` (inline) | | **Carrier mechanism** | Standalone YAML sidecar or `-- @mx ... -- @mx:end` comment blocks in SQL | | **Field naming** | camelCase | | **Conformance** | MAY (Level 3) |</p>
+<p>**Definition:** Database schemas carry MX metadata either in a standalone sidecar file (`mx.database.yaml`) or in inline SQL comments using the `-- @mx` / `-- @mx:end` delimiters.</p>
+<p>**Example (sidecar):**</p>
+<p>File: `mx.database.yaml`</p>
+<p>```yaml title: &quot;Customer database schema&quot; description: &quot;Schema metadata for the customer CRM database&quot; author: &quot;Tom Cranstoun&quot;</p>
+<p>mx: status: active contentType: database-schema domain: crm ```</p>
+<p>**Example (inline SQL):**</p>
+<p>```sql -- @mx -- title: Customer contacts table -- description: Primary contact records for CRM -- status: active -- contentType: database-table -- @mx:end CREATE TABLE contacts ( id INTEGER PRIMARY KEY, name TEXT NOT NULL ); ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>Inline SQL metadata blocks MUST start with `-- @mx` and end with `-- @mx:end`.</li>
+  <li>Each field line within the block MUST be prefixed with `--`.</li>
+  <li>Field names use camelCase.</li>
+</ul>
+<p>---</p>
+<h2 id="15-field-definitions-mx-non-yaml-identity-fields">15. Field definitions — mx:* non-YAML identity fields</h2>
+<p>The following fields are the non-YAML equivalents of standard cog fields. They provide identity and classification metadata in carrier formats that do not use YAML frontmatter (HTML, JavaScript, CSS). All fields in this section use the `mx:` prefix in their respective carrier contexts.</p>
+<h3 id="151-mxname">15.1. `mx:name`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | html, js, css | | **Conformance** | SHOULD (Level 2) | | **Default** | *(none)* |</p>
+<p>**Definition:** Cog name, equivalent to `title` in YAML. Provides a machine-readable identifier in carrier formats that lack YAML frontmatter.</p>
+<p>**Example (HTML):**</p>
+<p>```html &lt;meta name=&quot;mx:name&quot; content=&quot;validation-utility&quot;&gt; ```</p>
+<p>**Example (JSDoc):**</p>
+<p>```javascript /** @mx:name validation-utility */ ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>In YAML contexts, use `title` instead. `mx:name` is for non-YAML carriers only.</li>
+</ul>
+<p>---</p>
+<h3 id="152-mxversion">15.2. `mx:version`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | html, js, css | | **Conformance** | SHOULD (Level 2) | | **Default** | *(none)* |</p>
+<p>**Definition:** Version string, equivalent to `version` in YAML.</p>
+<p>**Example (HTML):**</p>
+<p>```html &lt;meta name=&quot;mx:version&quot; content=&quot;2.0&quot;&gt; ```</p>
+<p>**Example (CSS):**</p>
+<p>```css /* @mx:version 2.0 */ ```</p>
+<p>---</p>
+<h3 id="153-mxtype">15.3. `mx:type`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | html | | **Conformance** | SHOULD (Level 2) | | **Default** | *(none)* |</p>
+<p>**Definition:** Domain type classification, equivalent to `contentType` in YAML.</p>
+<p>**Example (HTML):**</p>
+<p>```html &lt;meta name=&quot;mx:type&quot; content=&quot;guide&quot;&gt; ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>In HTML contexts, `mx:type` maps to the YAML `contentType` field.</li>
+  <li>The shorter name `type` is used in HTML to follow web conventions.</li>
+</ul>
+<p>---</p>
+<h3 id="154-mxpurpose">15.4. `mx:purpose`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | js, css | | **Conformance** | MAY (Level 3) | | **Default** | *(none)* |</p>
+<p>**Definition:** Why this file exists. Equivalent to `purpose` in YAML.</p>
+<p>**Example (JSDoc):**</p>
+<p>```javascript /** @mx:purpose validation */ ```</p>
+<p>**Example (CSS):**</p>
+<p>```css /* @mx:purpose layout */ ```</p>
+<p>---</p>
+<h3 id="155-mxaudience">15.5. `mx:audience`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | js, css | | **Conformance** | MAY (Level 3) | | **Default** | *(none)* |</p>
+<p>**Definition:** Intended readership. Equivalent to `audience` in YAML. In non-YAML contexts, array values are expressed as a comma-separated string.</p>
+<p>**Example (JSDoc):**</p>
+<p>```javascript /** @mx:audience developers, agents */ ```</p>
+<p>---</p>
+<h3 id="156-mxstability">15.6. `mx:stability`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | js, css | | **Conformance** | MAY (Level 3) | | **Valid values** | stable, evolving, experimental, deprecated, archived | | **Default** | *(none)* |</p>
+<p>**Definition:** Stability level. Communicates how reliable this file's interface is for external consumers.</p>
+<p>**Example (JSDoc):**</p>
+<p>```javascript /** @mx:stability stable */ ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>`stable` — interface is fixed; breaking changes require a major version bump.</li>
+  <li>`evolving` — interface may change; consumers should pin versions.</li>
+  <li>`experimental` — interface is subject to significant change without notice.</li>
+  <li>`deprecated` — interface is scheduled for removal; consumers should migrate.</li>
+  <li>`archived` — interface is no longer maintained.</li>
+</ul>
+<p>---</p>
+<h3 id="157-mxcategory">15.7. `mx:category`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | html, js, css | | **Conformance** | MAY (Level 3) | | **Default** | *(none)* |</p>
+<p>**Definition:** Cog category. Equivalent to `category` in YAML. Determines registry grouping in non-YAML carrier formats.</p>
+<p>**Example (HTML):**</p>
+<p>```html &lt;meta name=&quot;mx:category&quot; content=&quot;mx-tool&quot;&gt; ```</p>
+<p>---</p>
+<h3 id="158-mxtags">15.8. `mx:tags`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | html, js, css | | **Conformance** | MAY (Level 3) | | **Default** | *(none)* |</p>
+<p>**Definition:** Discovery keywords as a comma-separated string. Equivalent to `tags` (array) in YAML.</p>
+<p>**Example (HTML):**</p>
+<p>```html &lt;meta name=&quot;mx:tags&quot; content=&quot;validation, metadata, utility&quot;&gt; ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>Values MUST be comma-separated in non-YAML contexts.</li>
+  <li>Values SHOULD be lowercase strings.</li>
+</ul>
+<p>---</p>
+<h3 id="159-mxbuilds-on">15.9. `mx:builds-on`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | js, css | | **Conformance** | MAY (Level 3) | | **Default** | *(none)* |</p>
+<p>**Definition:** Context dependencies as a comma-separated list of cog names. Equivalent to `buildsOn` (array) in YAML.</p>
+<p>**Example (JSDoc):**</p>
+<p>```javascript /** @mx:builds-on fields, cog-unified-spec */ ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>Uses kebab-case (`builds-on`) in non-YAML contexts, following the context-specific naming rules in Section 7.</li>
+  <li>Values MUST be comma-separated.</li>
+</ul>
+<p>---</p>
+<h3 id="1510-mxdocumented-in">15.10. `mx:documented-in`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | js, css | | **Conformance** | MAY (Level 3) | | **Default** | *(none)* |</p>
+<p>**Definition:** Path to companion documentation. Links a code file to its narrative documentation.</p>
+<p>**Example (JSDoc):**</p>
+<p>```javascript /** @mx:documented-in ../docs/validation-guide.cog.md */ ```</p>
+<p>---</p>
+<h3 id="1511-mxcontext-provides">15.11. `mx:context-provides`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Profile** | js, css | | **Conformance** | MAY (Level 3) | | **Default** | *(none)* |</p>
+<p>**Definition:** What context this file provides to agents. Declares the knowledge or capability an agent gains by reading this file.</p>
+<p>**Example (JSDoc):**</p>
+<p>```javascript /** @mx:context-provides Field validation rules and error message templates */ ```</p>
+<p>---</p>
+<h2 id="16-field-definitions-x-mx--public-extension-fields">16. Field definitions — x-mx- public extension fields</h2>
+<p>The following fields use the `x-mx-` prefix and are owned by CogNovaMX. They are visible in published cogs and provide implementation-specific features that are not part of the open standard.</p>
+<h3 id="161-x-mx-mount-type">16.1. `x-mx-mount-type`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Zone** | 2 (mx:) | | **Profile** | x-mx-public | | **Conformance** | MUST (Level 1) for x-mx-public profile | | **Valid values** | personal, team, product, standard | | **Default** | *(none — explicit declaration required)* |</p>
+<p>**Definition:** Categorises submodules in the hub mount table. Determines the governance and swapability characteristics of a mounted repository.</p>
+<p>**Example:**</p>
+<p>```yaml mx: x-mx-mount-type: personal ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>`personal` — owned by an individual. Content is personal to the user.</li>
+  <li>`team` — shared across a team. Content is collaborative.</li>
+  <li>`product` — a product component. Content is part of a deliverable.</li>
+  <li>`standard` — a forkable standard. Content follows community governance.</li>
+  <li>This field is REQUIRED for all `.mx.yaml.md` folder metadata files that describe mount points.</li>
+</ul>
+<p>---</p>
+<h3 id="162-x-mx-mount-swappable">16.2. `x-mx-mount-swappable`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string-or-boolean | | **Zone** | 2 (mx:) | | **Profile** | x-mx-public | | **Conformance** | MUST (Level 1) for x-mx-public profile | | **Valid values** | true, false, fork | | **Default** | *(none — explicit declaration required)* |</p>
+<p>**Definition:** Whether this mount can be swapped for a different implementation. Controls the replaceability of a mounted submodule.</p>
+<p>**Example:**</p>
+<p>```yaml mx: x-mx-mount-swappable: true ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>`true` — the mount can be replaced with any compatible alternative.</li>
+  <li>`false` — the mount is integral and MUST NOT be replaced.</li>
+  <li>`fork` — the mount can be replaced only by forking and customising.</li>
+</ul>
+<p>---</p>
+<h3 id="163-x-mx-mount-upstream">16.3. `x-mx-mount-upstream`</h3>
+<p>| Property | Value | |----------|-------| | **Type** | string | | **Zone** | 2 (mx:) | | **Profile** | x-mx-public | | **Conformance** | MAY (Level 3) | | **Default** | *(none)* |</p>
+<p>**Definition:** Upstream source for standard-type mounts. Identifies the canonical source repository for a forked or derived mount.</p>
+<p>**Example:**</p>
+<p>```yaml mx: x-mx-mount-upstream: &quot;<a href="https://github.com/example/upstream-repo&quot;" target="_blank" rel="noreferrer">https://github.com/example/upstream-repo&quot;</a> ```</p>
+<p>**Normative notes:**</p>
+<ul>
+  <li>This field is only meaningful when `x-mx-mount-type` is `standard`.</li>
+  <li>The value SHOULD be a URL pointing to the upstream repository.</li>
+</ul>
+<p>---</p>
+<h2 id="17-x-mx-p--private-extension-mechanism">17. x-mx-p- private extension mechanism</h2>
+<h3 id="171-overview">17.1. Overview</h3>
+<p>The `x-mx-p-` prefix designates private extension fields. Unlike standard fields and `x-mx-` public extensions, private extension values are opaque — they are hashed, encoded, or tokenised so that only holders of the decode registry can interpret them.</p>
+<h3 id="172-value-encoding">17.2. Value encoding</h3>
+<p>Private extension values MUST be encoded before storage. The encoding method is at the vendor's discretion. Common approaches include:</p>
+<ul>
+  <li>**Hash-based** — a one-way hash that maps to a lookup table in `$MX_HOME`</li>
+  <li>**Token-based** — a short token (e.g., `a3f2c8`) that resolves to a full value via the registry</li>
+  <li>**Encrypted** — symmetric or asymmetric encryption with keys stored in `$MX_HOME`</li>
+</ul>
+<h3 id="173-decode-registry">17.3. Decode registry</h3>
+<p>The decode registry lives in `$MX_HOME`. Implementations that encounter `x-mx-p-` fields without access to the decode registry MUST:</p>
+<p>1. Preserve the field and its opaque value unchanged. 2. Not attempt to decode, interpret, or validate the value. 3. Pass the field through to any output format without modification.</p>
+<h3 id="174-field-listing">17.4. Field listing</h3>
+<p>This standard does not list individual `x-mx-p-` fields. By definition, private extension fields are internal to CogNovaMX's implementation. Their names and semantics are documented in the `$MX_HOME` registry, not in public standards.</p>
+<p>---</p>
+<h2 id="18-extension-registration-process">18. Extension registration process</h2>
+<h3 id="181-how-to-add-new-extension-fields">18.1. How to add new extension fields</h3>
+<p>New extension fields are registered by CogNovaMX. The Gathering does not govern extension fields — vendor extensions are the vendor's decision.</p>
+<h3 id="182-registration-steps">18.2. Registration steps</h3>
+<p>1. **Choose the prefix.** Use `x-mx-` for public extensions, `x-mx-p-` for private extensions. 2. **Use kebab-case.** Extension field names MUST use kebab-case (unlike standard fields which use camelCase in YAML). Example: `x-mx-deploy-target`, not `x-mx-deployTarget`. 3. **Document the context.** Describe the field's purpose, type, valid values, and which carrier formats it applies to. 4. **No Gathering approval needed.** Extension fields follow vendor governance, not community governance.</p>
+<h3 id="183-promotion-to-standard">18.3. Promotion to standard</h3>
+<p>An extension field MAY be promoted to a standard field through the following process:</p>
+<p>1. The vendor proposes promotion to The Gathering. 2. The Gathering reviews the field's adoption, utility, and universality. 3. If accepted, the field's prefix is removed, and it becomes a standard field with camelCase naming. 4. The old `x-mx-` prefixed version SHOULD be maintained as an alias for one major version cycle.</p>
+<p>---</p>
+<h2 id="19-conformance-levels-summary">19. Conformance levels summary</h2>
+<h3 id="191-namespace-usage">19.1. Namespace usage</h3>
+<p>| Requirement | Level 1 (MUST) | Level 2 (SHOULD) | Level 3 (MAY) | |-------------|:-:|:-:|:-:| | Standard fields have no prefix | MUST | — | — | | Extension fields use `x-mx-` or `x-mx-p-` | MUST | — | — | | No prefix pollution | MUST | — | — |</p>
+<h3 id="192-carrier-format-metadata">19.2. Carrier format metadata</h3>
+<p>| Carrier | Level 1 (MUST) | Level 2 (SHOULD) | Level 3 (MAY) | |---------|:-:|:-:|:-:| | `.cog.md` / `.md` (YAML frontmatter) | MUST | — | — | | `.cog.html` / `.html` (meta tags) | — | MUST | — | | `.cog.js` / `.js` (JSDoc) | — | MUST | — | | `.cog.css` / `.css` (CSS comments) | — | MUST | — | | Shell scripts (comment block) | — | MUST | — | | `.mx.yaml` (media sidecar) | — | — | MAY | | `mx.yaml` (repo root) | — | — | MAY | | Image EXIF/XMP | — | — | MAY | | Database sidecar / inline SQL | — | — | MAY |</p>
+<h3 id="193-mx-non-yaml-identity-fields">19.3. mx:* non-YAML identity fields</h3>
+<p>| Field | Level 1 (MUST) | Level 2 (SHOULD) | Level 3 (MAY) | |-------|:-:|:-:|:-:| | `mx:name` | — | SHOULD | — | | `mx:version` | — | SHOULD | — | | `mx:type` | — | SHOULD | — | | `mx:purpose` | — | — | MAY | | `mx:audience` | — | — | MAY | | `mx:stability` | — | — | MAY | | `mx:category` | — | — | MAY | | `mx:tags` | — | — | MAY | | `mx:builds-on` | — | — | MAY | | `mx:documented-in` | — | — | MAY | | `mx:context-provides` | — | — | MAY |</p>
+<h3 id="194-x-mx--public-extension-fields">19.4. x-mx- public extension fields</h3>
+<p>| Field | Level 1 (MUST) | Level 2 (SHOULD) | Level 3 (MAY) | |-------|:-:|:-:|:-:| | `x-mx-mount-type` | MUST | — | — | | `x-mx-mount-swappable` | MUST | — | — | | `x-mx-mount-upstream` | — | — | MAY |</p>
+<p>---</p>
+<h2 id="20-security-and-privacy-considerations">20. Security and privacy considerations</h2>
+<ul>
+  <li>The `x-mx-p-` private extension mechanism is designed to protect sensitive metadata values. Implementations MUST NOT attempt to decode private values without the `$MX_HOME` registry.</li>
+  <li>Extension fields MAY carry information about infrastructure, deployment targets, or organisational structure. Authors SHOULD consider whether public extension values expose sensitive operational details.</li>
+  <li>The decode registry at `$MX_HOME` contains sensitive lookup tables. Access to `$MX_HOME` SHOULD be restricted to authorised users and agents.</li>
+</ul>
+<p>---</p>
+<h2 id="21-references">21. References</h2>
+<h3 id="211-normative-references">21.1. Normative references</h3>
+<div class="ref-list">
+  <div class="ref-entry"><div class="ref-label"></div><div class="ref-text">[MX Core Metadata Standard](mxs-01-core-metadata.cog.md) — conformance level framework, Zone 1/Zone 2 field definitions</div></div>
+  <div class="ref-entry"><div class="ref-label"></div><div class="ref-text">[Cog Unified Specification](../specifications/cog-unified-spec.cog.md) — the cog document format and carrier format details</div></div>
+  <div class="ref-entry"><div class="ref-label">[[ADR-02]</div><div class="ref-text">Namespace Policy](../architecture-decisions/adr-02-namespace-policy.cog.md) — architecture decision establishing the three-level namespace</div></div>
+  <div class="ref-entry"><div class="ref-label">[[NDR-02]</div><div class="ref-text">camelCase Naming](../naming-decisions/ndr-02-camelcase-naming.cog.md) — field naming convention</div></div>
+  <div class="ref-entry"><div class="ref-label">[[NDR-03]</div><div class="ref-text">Spelling Neutrality](../naming-decisions/ndr-03-spelling-neutrality.cog.md) — spelling-neutral vocabulary</div></div>
+  <div class="ref-entry"><div class="ref-label"></div><div class="ref-text">[MX Provenance Standard](mxs-03-provenance.cog.md) — trust, attribution, verification</div></div>
+  <div class="ref-entry"><div class="ref-label"></div><div class="ref-text">[MX AI/Agent Policy Standard](deferred/mxs-04-ai-agent-policy.cog.md) — AI governance and agent policies</div></div>
+  <div class="ref-entry"><div class="ref-label"></div><div class="ref-text">[MX Profile-Specific Metadata Standard](deferred/mxs-05-profile-metadata.cog.md) — content-type-specific fields</div></div>
+</div>
+<h3 id="212-informative-references">21.2. Informative references</h3>
+<div class="ref-list">
+  <div class="ref-entry"><div class="ref-label">[[RFC2119](https]</div><div class="ref-text">//www.rfc-editor.org/rfc/rfc2119) — Key words for use in RFCs to indicate requirement levels</div></div>
+  <div class="ref-entry"><div class="ref-label">[[RFC6648](https]</div><div class="ref-text">//www.rfc-editor.org/rfc/rfc6648) — Deprecating the &quot;X-&quot; prefix (historical context for the `x-mx-` convention)</div></div>
+  <div class="ref-entry"><div class="ref-label">[[HTTPExtensionHeaders](https]</div><div class="ref-text">//developer.mozilla.org/en-US/docs/Web/HTTP/Headers) — the `X-` prefix convention for non-standard headers</div></div>
+  <div class="ref-entry"><div class="ref-label">[[XMPSpecification](https]</div><div class="ref-text">//www.adobe.com/devnet/xmp.html) — Extensible Metadata Platform for media files</div></div>
+  <div class="ref-entry"><div class="ref-label">[[DublinCoreDCMINamespace](https]</div><div class="ref-text">//www.dublincore.org/specifications/dublin-core/dcmi-namespace/) — namespace governance model</div></div>
+  <div class="ref-entry"><div class="ref-label"></div><div class="ref-text">[MX Standards Alignment](../specifications/mx-standards-alignment.cog.md) — how MX conventions align with existing web standards</div></div>
+</div>
+<p>---</p>
+<h2 id="22-change-log">22. Change log</h2>
+<p>| Version | Date | Changes | |---------|------|---------| | 1.0-draft | 2026-04-02 | Initial draft. Namespace policy, carrier format mappings, and extension mechanisms based on ADR-02 namespace policy. |</p>
+</section>
+<section class="back">
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>Tom Cranstoun and Maxine (CogNovaMX). Machine-readable field dictionary: mx-canon/ssot/fields-data.yaml.</p>
+</section>
+<section class="generated-references">
+  <h2 id="23-references">23. References</h2>
+  <h3 id="231-normative-references">23.1. Normative References</h3>
+  <div class="ref-list">
+  <div class="ref-entry"><div class="ref-label">[MXS-01]</div><div class="ref-text">MX Core Metadata Standard, <a href="https://github.com/TG-Community/draft-cranstoun-mx-core-metadata" target="_blank" rel="noreferrer">https://github.com/TG-Community/draft-cranstoun-mx-core-metadata</a></div></div>
+</div>
+  <h3 id="232-informative-references">23.2. Informative References</h3>
+  <p>This document has no informative references.</p>
+</section>
+        <p class="stamp">Rendered from draft-cranstoun-mx-extensions.md at 2026-04-16T20:19:36.253Z</p>
+      </article>
+      <aside class="toc-panel">
+  <h2 class="toc-title">Table of Contents</h2>
+  <ol class="toc-list">
+    <li class="toc-item toc-level-1"><a href="#1-conformance">1. Conformance</a></li>
+    <li class="toc-item toc-level-2"><a href="#11-conformance-levels">1.1. Conformance levels</a></li>
+    <li class="toc-item toc-level-2"><a href="#12-authoritative-status">1.2. Authoritative status</a></li>
+    <li class="toc-item toc-level-1"><a href="#2-scope-and-relationship-to-other-standards">2. Scope and relationship to other standards</a></li>
+    <li class="toc-item toc-level-2"><a href="#21-what-this-document-covers">2.1. What this document covers</a></li>
+    <li class="toc-item toc-level-2"><a href="#22-what-this-document-does-not-cover">2.2. What this document does not cover</a></li>
+    <li class="toc-item toc-level-2"><a href="#23-relationship-to-existing-standards">2.3. Relationship to existing standards</a></li>
+    <li class="toc-item toc-level-1"><a href="#3-terminology">3. Terminology</a></li>
+    <li class="toc-item toc-level-1"><a href="#4-design-principles">4. Design principles</a></li>
+    <li class="toc-item toc-level-1"><a href="#5-namespace-policy">5. Namespace policy</a></li>
+    <li class="toc-item toc-level-2"><a href="#51-the-three-level-namespace">5.1. The three-level namespace</a></li>
+    <li class="toc-item toc-level-2"><a href="#52-standard-fields-no-prefix">5.2. Standard fields (no prefix)</a></li>
+    <li class="toc-item toc-level-2"><a href="#53-public-extension-fields-x-mx-">5.3. Public extension fields (`x-mx-`)</a></li>
+    <li class="toc-item toc-level-2"><a href="#54-private-extension-fields-x-mx-p-">5.4. Private extension fields (`x-mx-p-`)</a></li>
+    <li class="toc-item toc-level-2"><a href="#55-prefix-parsing-rule">5.5. Prefix parsing rule</a></li>
+    <li class="toc-item toc-level-1"><a href="#6-context-specific-naming">6. Context-specific naming</a></li>
+    <li class="toc-item toc-level-2"><a href="#61-the-naming-problem">6.1. The naming problem</a></li>
+    <li class="toc-item toc-level-2"><a href="#62-naming-rules-by-context">6.2. Naming rules by context</a></li>
+    <li class="toc-item toc-level-2"><a href="#63-conversion-rules">6.3. Conversion rules</a></li>
+    <li class="toc-item toc-level-2"><a href="#64-extension-field-naming-in-non-yaml-contexts">6.4. Extension field naming in non-YAML contexts</a></li>
+    <li class="toc-item toc-level-1"><a href="#7-carrier-format-mappings">7. Carrier format mappings</a></li>
+    <li class="toc-item toc-level-2"><a href="#71-cogmd-yaml-frontmatter">7.1. `.cog.md` — YAML frontmatter</a></li>
+    <li class="toc-item toc-level-2"><a href="#72-coghtml-html-meta-tags">7.2. `.cog.html` — HTML meta tags</a></li>
+    <li class="toc-item toc-level-2"><a href="#73-cogjs-jsdoc-comments">7.3. `.cog.js` — JSDoc comments</a></li>
+    <li class="toc-item toc-level-2"><a href="#74-cogcss-css-comments">7.4. `.cog.css` — CSS comments</a></li>
+    <li class="toc-item toc-level-2"><a href="#75-cogpng-cogjpg-exifxmp-metadata">7.5. `.cog.png` / `.cog.jpg` — EXIF/XMP metadata</a></li>
+    <li class="toc-item toc-level-2"><a href="#76-shell-scripts-comment-block">7.6. Shell scripts — comment block</a></li>
+    <li class="toc-item toc-level-1"><a href="#8----">8. ---</a></li>
+    <li class="toc-item toc-level-1"><a href="#9-title-build-and-deploy">9. title: &quot;Build and deploy&quot;</a></li>
+    <li class="toc-item toc-level-1"><a href="#10-description-builds-site-artefacts-and-deploys-to-cloudflare">10. description: &quot;Builds site artefacts and deploys to Cloudflare&quot;</a></li>
+    <li class="toc-item toc-level-1"><a href="#11-author-tom-cranstoun">11. author: &quot;Tom Cranstoun&quot;</a></li>
+    <li class="toc-item toc-level-1"><a href="#12-status-active">12. status: active</a></li>
+    <li class="toc-item toc-level-1"><a href="#13-contenttype-script">13. contentType: script</a></li>
+    <li class="toc-item toc-level-1"><a href="#14----">14. ---</a></li>
+    <li class="toc-item toc-level-2"><a href="#141-mxyaml-media-sidecar">14.1. `.mx.yaml` — media sidecar</a></li>
+    <li class="toc-item toc-level-2"><a href="#142-mxyaml-code-repository-root">14.2. `mx.yaml` — code repository root</a></li>
+    <li class="toc-item toc-level-2"><a href="#143-database-sidecars-and-inline-sql">14.3. Database sidecars and inline SQL</a></li>
+    <li class="toc-item toc-level-1"><a href="#15-field-definitions-mx-non-yaml-identity-fields">15. Field definitions — mx:* non-YAML identity fields</a></li>
+    <li class="toc-item toc-level-2"><a href="#151-mxname">15.1. `mx:name`</a></li>
+    <li class="toc-item toc-level-2"><a href="#152-mxversion">15.2. `mx:version`</a></li>
+    <li class="toc-item toc-level-2"><a href="#153-mxtype">15.3. `mx:type`</a></li>
+    <li class="toc-item toc-level-2"><a href="#154-mxpurpose">15.4. `mx:purpose`</a></li>
+    <li class="toc-item toc-level-2"><a href="#155-mxaudience">15.5. `mx:audience`</a></li>
+    <li class="toc-item toc-level-2"><a href="#156-mxstability">15.6. `mx:stability`</a></li>
+    <li class="toc-item toc-level-2"><a href="#157-mxcategory">15.7. `mx:category`</a></li>
+    <li class="toc-item toc-level-2"><a href="#158-mxtags">15.8. `mx:tags`</a></li>
+    <li class="toc-item toc-level-2"><a href="#159-mxbuilds-on">15.9. `mx:builds-on`</a></li>
+    <li class="toc-item toc-level-2"><a href="#1510-mxdocumented-in">15.10. `mx:documented-in`</a></li>
+    <li class="toc-item toc-level-2"><a href="#1511-mxcontext-provides">15.11. `mx:context-provides`</a></li>
+    <li class="toc-item toc-level-1"><a href="#16-field-definitions-x-mx--public-extension-fields">16. Field definitions — x-mx- public extension fields</a></li>
+    <li class="toc-item toc-level-2"><a href="#161-x-mx-mount-type">16.1. `x-mx-mount-type`</a></li>
+    <li class="toc-item toc-level-2"><a href="#162-x-mx-mount-swappable">16.2. `x-mx-mount-swappable`</a></li>
+    <li class="toc-item toc-level-2"><a href="#163-x-mx-mount-upstream">16.3. `x-mx-mount-upstream`</a></li>
+    <li class="toc-item toc-level-1"><a href="#17-x-mx-p--private-extension-mechanism">17. x-mx-p- private extension mechanism</a></li>
+    <li class="toc-item toc-level-2"><a href="#171-overview">17.1. Overview</a></li>
+    <li class="toc-item toc-level-2"><a href="#172-value-encoding">17.2. Value encoding</a></li>
+    <li class="toc-item toc-level-2"><a href="#173-decode-registry">17.3. Decode registry</a></li>
+    <li class="toc-item toc-level-2"><a href="#174-field-listing">17.4. Field listing</a></li>
+    <li class="toc-item toc-level-1"><a href="#18-extension-registration-process">18. Extension registration process</a></li>
+    <li class="toc-item toc-level-2"><a href="#181-how-to-add-new-extension-fields">18.1. How to add new extension fields</a></li>
+    <li class="toc-item toc-level-2"><a href="#182-registration-steps">18.2. Registration steps</a></li>
+    <li class="toc-item toc-level-2"><a href="#183-promotion-to-standard">18.3. Promotion to standard</a></li>
+    <li class="toc-item toc-level-1"><a href="#19-conformance-levels-summary">19. Conformance levels summary</a></li>
+    <li class="toc-item toc-level-2"><a href="#191-namespace-usage">19.1. Namespace usage</a></li>
+    <li class="toc-item toc-level-2"><a href="#192-carrier-format-metadata">19.2. Carrier format metadata</a></li>
+    <li class="toc-item toc-level-2"><a href="#193-mx-non-yaml-identity-fields">19.3. mx:* non-YAML identity fields</a></li>
+    <li class="toc-item toc-level-2"><a href="#194-x-mx--public-extension-fields">19.4. x-mx- public extension fields</a></li>
+    <li class="toc-item toc-level-1"><a href="#20-security-and-privacy-considerations">20. Security and privacy considerations</a></li>
+    <li class="toc-item toc-level-1"><a href="#21-references">21. References</a></li>
+    <li class="toc-item toc-level-2"><a href="#211-normative-references">21.1. Normative references</a></li>
+    <li class="toc-item toc-level-2"><a href="#212-informative-references">21.2. Informative references</a></li>
+    <li class="toc-item toc-level-1"><a href="#22-change-log">22. Change log</a></li>
+    <li class="toc-item toc-level-1"><a href="#23-references">23. References</a></li>
+    <li class="toc-item toc-level-2"><a href="#231-normative-references">23.1. Normative References</a></li>
+    <li class="toc-item toc-level-2"><a href="#232-informative-references">23.2. Informative References</a></li>
+    <li class="toc-item toc-level-1"><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</aside>
+    </div>
+  </main>
+</body>
+</html>
